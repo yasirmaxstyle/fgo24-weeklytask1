@@ -9,9 +9,11 @@
 1. jika tidak maka kembali ke langkah 2
 1. hitung panjang kata sebagai **"len"**
 1. tentukan variabel hasil sebagai 'benar' untuk pertama kali
-1. periksa setiap huruf dalam kata tersebut dari awal sampai akhir, apakah huruf dengan index ***i*** sama dengan huruf dengan index ***len - 1 - i***
-1. jika sama maka hasil tidak berubah
-1. jika tidak maka ubah hasil menjadi 'salah'
+1. buatlah variabel i dengan nilai 0 untuk inisialisasi perulangan
+1. periksa setiap huruf dalam kata tersebut dari awal sampai akhir, apakah huruf dengan urutan ***i*** sama dengan huruf dengan index ***len - 1 - i***
+1. jika ada yang tidak sama maka ubah hasil menjadi 'salah'
+1. tambah i dengan 1 setiap selesai 1 perulangan
+1. ulangi sampai i sama dengan len
 1. buatlah variabel output
 1. jika hasil benar tampilkan 'kata ini palindrom'
 1. jika tidak maka tampilkan 'kata ini bukan palindrom'
@@ -27,10 +29,11 @@ in[/kata/]
 val{typeof kata == 'string'}
 var[len = kata.length]
 res[hasil = true]
-loop[loop setiap kata]
-con@{shape: diamond, label: 'kata[i] == kata[len - i]'}
-tr[hasil = true]
-fl[hasil = false]
+loop[i = 0]
+conloop@{shape: diamond, label: i < len - 1}
+con@{shape: diamond, label: 'kata[i] !== kata[len - i]'}
+tr[hasil = false]
+inc[init = init + 1]
 resout[output]
 rescon{hasil == true}
 out1[/'palindrom'/]
@@ -43,10 +46,13 @@ val --true--> var
 val --false--> in
 var --> res
 res --> loop
-
+loop --> conloop
+conloop --true--> con
 con --true--> tr
-con --false--> fl
-tr & fl --> resout
+tr --> inc
+inc --> loop
+con --false--> inc
+conloop --false--> resout
 resout --> rescon
 rescon --true--> out1
 rescon --false--> out2
